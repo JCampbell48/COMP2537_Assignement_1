@@ -13,7 +13,7 @@ const app = express();
 
 const Joi = require("joi");
 
-const expireTime = 24 * 60 * 60 * 1000; // ** update expiry to 1 hour
+const expireTime = 60 * 60 * 1000; // ** updated expiry to 1 hour
 
 /* secret information section */
 const mongodb_user = process.env.MONGODB_USER;
