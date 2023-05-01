@@ -189,7 +189,7 @@ app.post('/submitUser', async (req,res) => {
 	await userCollection.insertOne({username: username, password: hashedPassword});
 	console.log("Inserted user");
 
-    var html = "successfully created user";
+    var html = "Thanks for Signing up!";
     res.send(html);
 });
 
@@ -235,7 +235,7 @@ app.get('/members', (req,res) => {
     }
     var html = `
     Members Area! 
-    <img src='/fluffy.gif' style='width:250px;'>;
+    <img src='/fluffy.gif' style='width:250px;'>
     `;
     res.send(html);
 });
