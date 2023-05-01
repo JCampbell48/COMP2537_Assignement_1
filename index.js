@@ -48,7 +48,34 @@ app.use(session({
 ));
 
 app.get('/', (req,res) => {
-    res.send("<h1>Hello World!</h1>");
+    // res.send("<h1>Hello World!</h1>");
+    
+    if (req.session.authenticated) {
+        // If user is logged in, show logout button
+        var username = req.body.username
+        res.send(`
+            <h1>Hello ${username}</h1>
+            <form action="/members" method="GET">
+                <button type="submit">Members</button>
+            </form>
+            <form action="/logout" method="GET">
+                <button type="submit">Logout</button>
+            </form>
+            
+        `);
+    } else {
+        // shows login form if user is not logged in
+        res.send(`
+         <form action="/createUser" method="GET">
+         <button type="submit">Sign Up</button>
+          </form>
+         <form action="/login" method="GET">
+         <button type="submit">Login</button>
+         </form>
+
+        `);
+        
+    }
 });
 
 // sql injection
@@ -192,7 +219,7 @@ app.post('/loggingin', async (req,res) => {
 		req.session.username = username;
 		req.session.cookie.maxAge = expireTime;
 
-		res.redirect('/loggedIn');
+		res.redirect('/members');
 		return;
 	}
 	else {
@@ -202,12 +229,13 @@ app.post('/loggingin', async (req,res) => {
 	}
 });
 
-app.get('/loggedin', (req,res) => {
+app.get('/members', (req,res) => {
     if (!req.session.authenticated) {
         res.redirect('/login');
     }
     var html = `
-    You are logged in!
+    Members Area! 
+    <img src='/fluffy.gif' style='width:250px;'>;
     `;
     res.send(html);
 });
