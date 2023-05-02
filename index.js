@@ -52,11 +52,11 @@ app.get('/', (req,res) => {
     
     if (req.session.authenticated) {
         // If user is logged in, show logout button
-        var username = req.body.username
+        var username = req.session.username
         res.send(`
-            <h1>Hello ${username}</h1>
+            <h1>Hello, ${username}! </h1>
             <form action="/members" method="GET">
-                <button type="submit">Members</button>
+                <button type="submit">Members Area</button>
             </form>
             <form action="/logout" method="GET">
                 <button type="submit">Logout</button>
@@ -66,7 +66,7 @@ app.get('/', (req,res) => {
     } else {
         // shows login form if user is not logged in
         res.send(`
-         <form action="/createUser" method="GET">
+         <form action="/signUp" method="GET">
          <button type="submit">Sign Up</button>
           </form>
          <form action="/login" method="GET">
@@ -143,7 +143,7 @@ app.post('/submitEmail', (req,res) => {
     }
 });
 
-app.get('/createUser', (req,res) => {
+app.get('/signUp', (req,res) => {
     var html = `
     create user
     <form action='/submitUser' method='post'>
@@ -180,7 +180,7 @@ app.post('/submitUser', async (req,res) => {
 	const validationResult = schema.validate({username, password});
 	if (validationResult.error != null) {
 	   console.log(validationResult.error);
-	   res.redirect("/createUser");
+	   res.redirect("/signUp");
 	   return;
    }
 
@@ -235,7 +235,7 @@ app.get('/members', (req,res) => {
     }
     var html = `
     Members Area! 
-    <img src='/fluffy.gif' style='width:250px;'>
+    <img src='/puppy230123.jpg' style='width:250px;'>
     `;
     res.send(html);
 });
