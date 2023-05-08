@@ -85,6 +85,7 @@ function adminAuthorization(req, res, next) {
 
 
 app.get('/', (req,res) => {
+	var username = req.session.username
     res.render("index");
 })
 
@@ -145,7 +146,8 @@ app.post('/submitEmail', (req,res) => {
 });
 
 app.get('/createUser', (req,res) => {
-    res.render("createUser");
+   res.render("createUser");
+   
 });
 
 app.get('/login', (req,res) => {
@@ -252,6 +254,19 @@ app.get('/admin', sessionValidation, adminAuthorization, async (req,res) => {
 });
 
 app.use(express.static(__dirname + "/public"));
+
+// this is my members route
+app.get('/members', (req,res) => {
+    if (!req.session.authenticated) {
+        res.redirect('/login');
+    }
+    // var html = `
+    // Members Area! 
+    // <img src='/puppy230123.jpg' style='width:250px;'>
+    // `;
+    // res.send(html);
+	res.render("members");
+});
 
 app.get("*", (req,res) => {
 	res.status(404);
